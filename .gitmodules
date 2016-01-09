@@ -1,0 +1,24 @@
+[submodule "third_party/libunwind/upstream"]
+	path = third_party/libunwind/upstream
+	url = git://git.sv.gnu.org/libunwind.git
+[submodule "third_party/glog/upstream"]
+	path = third_party/glog/upstream
+	url = https://github.com/google/glog.git
+[submodule "third_party/gflags/upstream"]
+	path = third_party/gflags/upstream
+	url = https://github.com/gflags/gflags.git
+[submodule "third_party/protobuf/upstream"]
+	path = third_party/protobuf/upstream
+	url = https://github.com/google/protobuf.git
+[submodule "third_party/boringssl/src"]
+	path = third_party/boringssl/src
+	url = https://boringssl.googlesource.com/boringssl
+[submodule "third_party/grpc/upstream"]
+	path = third_party/grpc/upstream
+	url = https://github.com/grpc/grpc.git
+[submodule "third_party/snappy/upstream"]
+	path = third_party/snappy/upstream
+	url = https://github.com/google/snappy.git
+[submodule "third_party/zlib/upstream"]
+	path = third_party/zlib/upstream
+	url = https://github.com/madler/zlib.git
