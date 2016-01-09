@@ -28,6 +28,7 @@ class HelloClient {
     ClientContext context;
 
     Status status = stub_->Salute(&context, request, &reply);
+
     if (status.ok()) {
       return reply.message();
     } else {
@@ -39,12 +40,26 @@ class HelloClient {
   std::unique_ptr<HelloService::Stub> stub_;
 };
 
+void doStuff(HelloClient *client) {
+    auto begin = clock();
+
+    std::string user("Fidel");
+    std::string reply = client->Salute(user);
+    std::cout << "Greeter received: " << reply << std::endl;
+
+    auto end = clock();
+    double elapsed_ms = double(end - begin) / CLOCKS_PER_SEC / 1000;
+
+    std::cout.precision(17);
+    std::cout << std::fixed <<"Elapsed time: " << elapsed_ms << std::endl;
+}
+
 int main(int argc, char** argv) {
   HelloClient client(
       grpc::CreateChannel("localhost:50051", grpc::InsecureCredentials()));
-  std::string user("Fidel");
-  std::string reply = client.Salute(user);
-  std::cout << "Greeter received: " << reply << std::endl;
+
+  doStuff(&client);
+  doStuff(&client);
 
   return 0;
 }
