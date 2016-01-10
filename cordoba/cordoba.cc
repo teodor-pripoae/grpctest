@@ -18,8 +18,7 @@ using hello::HelloService;
 
 class HelloClient {
  public:
-  HelloClient(std::shared_ptr<Channel> channel)
-      : stub_(HelloService::NewStub(channel)) {}
+  HelloClient(std::shared_ptr<Channel> channel) : stub_(HelloService::NewStub(channel)) {}
 
   std::string Salute(const std::string& user) {
     HelloRequest request;

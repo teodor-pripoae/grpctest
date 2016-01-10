@@ -18,8 +18,7 @@ using hello::HelloReply;
 using hello::HelloService;
 
 class HelloServiceImpl final : public HelloService::Service {
-  Status Salute(ServerContext* context, const HelloRequest* request,
-                  HelloReply* reply) {
+  Status Salute(ServerContext* context, const HelloRequest* request, HelloReply* reply) {
     std::string prefix("Buenos dias presidente ");
     reply->set_message(prefix + request->name() + "!");
     return Status::OK;
