@@ -1,6 +1,7 @@
 #include <iostream>
 #include <memory>
 #include <string>
+#include <sstream>
 
 #include <grpc/grpc.h>
 #include <grpc++/channel.h>
@@ -39,26 +40,36 @@ class HelloClient {
   std::unique_ptr<HelloService::Stub> stub_;
 };
 
-void doStuff(HelloClient *client) {
+void printTime(std::string msg, clock_t begin) {
+    auto end = clock();
+    double elapsed_sec = double(end - begin) / CLOCKS_PER_SEC;
+
+    std::cout.precision(17);
+    std::cout << msg << " " << std::fixed <<"Elapsed time: " << elapsed_sec << std::endl;
+}
+
+void doStuff(HelloClient *client, int index) {
     auto begin = clock();
 
     std::string user("Fidel");
     std::string reply = client->Salute(user);
     std::cout << "Greeter received: " << reply << std::endl;
 
-    auto end = clock();
-    double elapsed_ms = double(end - begin) / CLOCKS_PER_SEC / 1000;
-
-    std::cout.precision(17);
-    std::cout << std::fixed <<"Elapsed time: " << elapsed_ms << std::endl;
+    std::stringstream msg;
+    msg << "Message " << index;
+    printTime(msg.str(), begin);
 }
 
 int main(int argc, char** argv) {
+  auto begin = clock();
   HelloClient client(
       grpc::CreateChannel("localhost:50051", grpc::InsecureCredentials()));
 
-  doStuff(&client);
-  doStuff(&client);
+  for (auto i = 1; i <= 50; i ++) {
+    doStuff(&client, i);
+  }
+
+  printTime("Total time for 50 rpcs", begin);
 
   return 0;
 }

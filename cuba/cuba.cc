@@ -1,6 +1,7 @@
 #include <iostream>
 #include <memory>
 #include <string>
+#include <sstream>
 
 #include <grpc/grpc.h>
 #include <grpc++/security/server_credentials.h>
@@ -17,10 +18,14 @@ using hello::HelloRequest;
 using hello::HelloReply;
 using hello::HelloService;
 
+int GL_INDEX = 0;
+
 class HelloServiceImpl final : public HelloService::Service {
   Status Salute(ServerContext* context, const HelloRequest* request, HelloReply* reply) {
-    std::string prefix("Buenos dias presidente ");
-    reply->set_message(prefix + request->name() + "!");
+    GL_INDEX ++;
+    std::stringstream prefix;
+    prefix << "Hello Fidel! " << GL_INDEX;
+    reply->set_message(prefix.str() + request->name() + "!");
     return Status::OK;
   }
 };
